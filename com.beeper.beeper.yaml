@@ -1,0 +1,37 @@
+app-id: com.beeper.beeper
+runtime: org.freedesktop.Platform
+runtime-version: '24.08'
+sdk: org.freedesktop.Sdk
+base: org.electronjs.Electron2.BaseApp
+base-version: '24.08'
+command: run.sh
+separate-locales: false
+rename-desktop-file: beepertexts.desktop
+rename-icon: beepertexts
+finish-args:
+  - --share=network
+  - --device=all
+  - --socket=fallback-x11
+  - --socket=wayland
+  - --filesystem=xdg-download
+modules:
+  - name: beeper
+    buildsystem: simple
+    sources:
+      - type: file
+        only-arches:
+          - x86_64
+        url: https://beeper-desktop.download.beeper.com/builds/Beeper-4.0.494.AppImage
+        sha256: 561d3468dfa9773059dd67992a596a78f9d3bd388114edc6dd0fccea1cd4e52e
+      - type: file
+        path: run.sh
+    build-commands:
+      - chmod +x Beeper*.AppImage
+      - ./Beeper*.AppImage --appimage-extract
+      - desktop-file-edit --set-key=Exec --set-value="run.sh %U" squashfs-root/beepertexts.desktop
+      - mv squashfs-root/* ${FLATPAK_DEST}/
+      - mkdir -p "${FLATPAK_DEST}/share/applications"
+      - install -m644 "${FLATPAK_DEST}/beepertexts.desktop" "${FLATPAK_DEST}/share/applications/beepertexts.desktop"
+      - mv "${FLATPAK_DEST}/usr/share/icons" "${FLATPAK_DEST}/share/"
+      - install -Dm0755 run.sh "${FLATPAK_DEST}/bin/run.sh"
+
