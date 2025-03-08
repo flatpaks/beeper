@@ -46,7 +46,7 @@ with open('beeper.appimage',"rb") as f:
     sed_expr=f"sed -e 's,sha256: .*,sha256: {shasum},' -i com.beeper.beeper.yaml"
     subprocess.run(sed_expr, shell=True)
 
-def commit:
+def commit():
     statcode=subprocess.run("git status|grep 'nothing to commit'", shell=True)
     if statcode!=0:
         commit=f"git commit -am 'autobuild for {version}'"
