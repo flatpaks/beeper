@@ -47,7 +47,11 @@ with open('beeper.appimage',"rb") as f:
     subprocess.run(sed_expr, shell=True)
 
 def commit:
-    commit=f"git commit -am 'autobuild for {version}'"
-    tagetc=f"git tag {version}; git push; git push -f origin {version}"
-    subprocess.run(commit, shell=True)
-    subprocess.run(tagetc, shell=True)
+    statcode=subprocess.run("git status|grep 'nothing to commit'", shell=True)
+    if statcode!=0:
+        commit=f"git commit -am 'autobuild for {version}'"
+        tagetc=f"git tag {version}; git push; git push -f origin {version}"
+        subprocess.run(commit, shell=True)
+        subprocess.run(tagetc, shell=True)
+
+commit()
