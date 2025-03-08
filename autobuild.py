@@ -15,6 +15,15 @@ conn = http.client.HTTPSConnection('api.beeper.com')
 conn.request('GET', '/desktop/download/linux/x64/stable/com.automattic.beeper.desktop')
 response = conn.getresponse()
 loc=response.getheader("Location")
-print(loc)
 
+if loc != current:
+    subprocess.run(["sed", "-e", f"'s,{current},{loc},'", "-i", "autobuild.py"])
+else:
+    print("no new version.")
+    exit()
 
+urlarr=loc.split("/")
+fname=urlarr[len(urlarr)-1]
+print(fname)
+version=fname.lower().replace("beeper-", "").replace(".appimage", "")
+print(version)
