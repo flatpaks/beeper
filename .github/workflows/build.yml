@@ -7,10 +7,6 @@ on:
         - master
     tags:
       - '*'
-        #branches:
-        #  - main
-        #  - master
-        #  - testing
   workflow_dispatch:
 
 jobs:
@@ -96,7 +92,7 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         uses: actions/checkout@v4
         with:
-          ref: 3bfa32a90c7bdd769a0e2235f66bd1aec0310ec3
+          ref: 0eb7d9d79298439c8c34b38a369a128e444fe5d3
       - name: sync to gh-pages branch repo dir and commit
         if: startsWith(github.ref, 'refs/tags/')
         shell: bash
