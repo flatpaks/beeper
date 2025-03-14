@@ -46,12 +46,11 @@ with open('beeper.appimage',"rb") as f:
     sed_expr=f"sed -e 's,sha256: .*,sha256: {shasum},' -i com.beeper.beeper.yaml"
     subprocess.run(sed_expr, shell=True)
 
-def commit():
-    statcode=subprocess.run("git status|grep 'nothing to commit'", shell=True)
-    if statcode!=0:
-        commit=f"git commit -am 'autobuild for {version}'"
-        tagetc=f"git tag {version}; git push; git push -f origin {version}"
-        subprocess.run(commit, shell=True)
-        subprocess.run(tagetc, shell=True)
+statcode=subprocess.run("git status|grep 'nothing to commit'", shell=True)
+if statcode.returncode!=0:
+    print("Commiting")
+    commit=f"git commit -am 'autobuild for {version}'"
+    tagetc=f"git tag {version}; git push; git push -f origin {version}"
+    subprocess.run(commit, shell=True)
+    subprocess.run(tagetc, shell=True)
 
-commit()
