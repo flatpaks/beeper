@@ -51,6 +51,7 @@ if statcode.returncode!=0:
     print("Commiting")
     commit=f"git commit -am 'autobuild for {version}'"
     tagetc=f"git tag {version}; git push; git push -f origin {version}"
-    subprocess.run(commit, shell=True)
-    subprocess.run(tagetc, shell=True)
+    commit_out=subprocess.run(commit, shell=True)
+    tag_out=subprocess.run(tagetc, shell=True)
+    print(f"Commit: {commit_out.returncode}, tag: {tag_out.returncode}")
 
