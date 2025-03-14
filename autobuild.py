@@ -50,7 +50,8 @@ statcode=subprocess.run("git status|grep 'nothing to commit'", shell=True)
 if statcode.returncode!=0:
     print("Commiting")
     commit=f"git commit -am 'autobuild for {version}'"
-    tagetc=f"git tag {version}; git push; git push -f origin {version}"
+    tagetc=f"git tag {version}; git push -f; git push -f origin {version}"
+
     commit_out=subprocess.run(commit, shell=True)
     tag_out=subprocess.run(tagetc, shell=True)
     print(f"Commit: {commit_out.returncode}, tag: {tag_out.returncode}")
