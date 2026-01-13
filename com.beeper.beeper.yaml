@@ -21,8 +21,8 @@ modules:
       - type: file
         only-arches:
           - x86_64
-        url: https://beeper-desktop.download.beeper.com/builds/Beeper-4.2.367-x86_64.AppImage
-        sha256: b76927600cba1bf5ddfdd380bea03ec224dae8afff99a1e2c2363b029b218e19
+        url: https://beeper-desktop.download.beeper.com/builds/Beeper-4.2.455-x86_64.AppImage
+        sha256: dc51da3c825be34b5affeb20ba8973d904012a41a07753f70a0c841c7c57e710
       - type: file
         path: run.sh
     build-commands:
