@@ -14,6 +14,7 @@ finish-args:
   - --socket=fallback-x11
   - --socket=wayland
   - --filesystem=xdg-download
+  - --talk-name=org.kde.StatusNotifierWatcher
 modules:
   - name: beeper
     buildsystem: simple
