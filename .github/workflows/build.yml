@@ -13,7 +13,7 @@ jobs:
   a-publish-release:
     if: startsWith(github.ref, 'refs/tags/')
     #runs-on: self-hosted
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     name: '1 publish release'
     steps:
       - name: Create Release
@@ -32,7 +32,7 @@ jobs:
 
   b-build-flatpaks:
     #runs-on: self-hosted
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     name: 'build flatpaks'
     steps:
       - name: install secrets
@@ -48,7 +48,6 @@ jobs:
       - name: install system package deps
         shell: bash
         run: |
-          sudo add-apt-repository ppa:flatpak/stable -y
           sudo apt-get update && sudo apt-get install -qq -y bash rsync flatpak elfutils coreutils slirp4netns rootlesskit binfmt-support fuse-overlayfs flatpak-builder qemu-user-static unzip
       - name: install flatpak deps
         shell: bash
