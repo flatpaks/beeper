@@ -3,6 +3,11 @@ on:
   schedule:
     - cron: '2 2 * * 2'
   workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
 jobs:
   autobuild-sh:
     runs-on: ubuntu-latest
@@ -10,11 +15,17 @@ jobs:
     steps:
       - name: checkout code
         uses: actions/checkout@v7
-        with:
-          token: ${{ secrets.OTHER_TOKEN }}
       - name: run autobuild
+        id: autobuild
         shell: bash
         run: |
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
           git config --global user.name "${{ github.actor }}"
           ./autobuild.py
+      - name: trigger build workflow
+        if: steps.autobuild.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          gh workflow run "build and deploy flatpak" --ref "${{ steps.autobuild.outputs.version }}"
