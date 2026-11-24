@@ -8,7 +8,7 @@ import os
 
 endpoint="https://api.beeper.com/desktop/download/linux/x64/stable/com.automattic.beeper.desktop"
 
-current="4.3.308-x86_64"
+current="4.3.340-x86_64"
 
 # get headers of the download url to get the "real" version download url
 conn = http.client.HTTPSConnection('api.beeper.com')
